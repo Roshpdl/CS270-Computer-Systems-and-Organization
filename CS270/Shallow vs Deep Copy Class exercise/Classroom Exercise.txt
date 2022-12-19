@@ -1,0 +1,84 @@
+ClassRoom Exercise - Shallow vs Deep Copy
+CS270 
+Roshan Poudel
+
+
+For 1 (structs_get_cpoied.c)
+
+I would expect the array contents as follows:
+d1.efg : 7, 5, 6
+d2.efg : 4, 5, 6
+
+Actual content of the array is as follows:
+d1.efg : 7, 5, 6
+d2.efg : 7, 5, 6
+
+And all test have been passed. 
+
+Code to print the contents of the efg arrays from both structs:
+
+  for (int i = 0; i < 3 ; i++)
+  {
+    printf("%d\n", d1.efg[i]);
+  }
+
+  for (int j = 0; j < 3 ; j++)
+  {
+    printf("%d\n", d2.efg[j]);
+  }
+
+
+Observation:
+When a struct is copied using assignment statement, it is copied field by field from one variable to another.
+Same is not true for arrays.
+
+In my opinion, the expected values do not match with real values because after assigning d1 to d2,
+d2.efg now refers to the same address as the d1.efg points to, which results in the value of d2.efg[0] being
+changed when we change the value of d1.efg[0]. 
+
+
+For 2 (arrays_get_aliased.c)
+
+Before the statement copy[0] = 3, the values of both abc and copy are same. That is {0, 1, 2}.
+After the statement copy[0] = 3, however, the value of both abc and copy changes. That is {3, 1, 2}.
+
+For 3 (arrays_aliased_2.c)
+
+sizeof(abc) = 12            //total size of the array
+sizeof(abc[0]) = 4          //size of one element in the array
+sizeof(abc)/sizeof(abc[0])  // (total size / size of one element ) => LENGTH of the array.
+
+For 4 (memmove.c)
+
+Here, contents of copy1 and copy2 are different because copy1 is a shallow copy of array abcand copy2 is a deep copy of abc.
+That means, whenever we change the value at index 0 in abc, the change appears in copy1 because copy1 is basically pointing to the index 0.
+Whereas, using memmove() we deepcopy the entire array abc to copy2 making it independent of the abc. Therefore, changing the original array does not impact copy
+
+
+For 5 (automem.c)
+
+Expected output:
+threes: 3 9 27
+evens: 0 2 4
+
+Real output:
+threes: 3 9 27
+evens: 1799206320 1 -1257164316 (different values for even every time you compile and run the program)
+
+
+It is a bad idea because we are not returning an integer pointer to the array we created. Instead, the function
+just literally returns the address of the stack memory associated with the local variable 'out' which does not live 
+outside its function scope. That is the function is returning the address of the variable 'out' itself and not the address of its content/value.
+
+
+The following code would solve the problem because now we are returning the pointer to the array we just created.
+
+ int *get_even(int count){
+   int *out;
+   out = malloc((sizeof(int)* count));
+   for (int i = 0; i < count; i++){
+     out[i] = 2*i;
+   }
+   return out;
+ }
+

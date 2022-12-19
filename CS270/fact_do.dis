@@ -1,0 +1,24 @@
+fact_do.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <fact_do>:
+   0:   f3 0f 1e fa             endbr64 
+   4:   55                      push   %rbp
+   5:   48 89 e5                mov    %rsp,%rbp
+   8:   48 89 7d e8             mov    %rdi,-0x18(%rbp)
+   c:   48 c7 45 f8 01 00 00    movq   $0x1,-0x8(%rbp)
+  13:   00 
+  ###Loop starts here
+  14:   48 8b 45 f8             mov    -0x8(%rbp),%rax
+  18:   48 0f af 45 e8          imul   -0x18(%rbp),%rax
+  1d:   48 89 45 f8             mov    %rax,-0x8(%rbp)
+  21:   48 83 6d e8 01          subq   $0x1,-0x18(%rbp)
+  26:   48 83 7d e8 01          cmpq   $0x1,-0x18(%rbp)
+  2b:   7f e7                   jg     14 <fact_do+0x14>
+  ###Loop ends here
+  2d:   48 8b 45 f8             mov    -0x8(%rbp),%rax
+  31:   5d                      pop    %rbp
+  32:   c3                      ret    
+fact_do.dis (END)

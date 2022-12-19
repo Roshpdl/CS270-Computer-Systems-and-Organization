@@ -1,0 +1,55 @@
+1. 
+
+The content of the array a would be a = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
+
+2. 
+
+strcpy(str, "tire-bouchon");
+strcpy(&str[4], "d-or-wi");
+strcat(str, "red?");
+
+--> str would be tired-or-wired?
+
+3.
+
+16 is the minimum size.
+It can be declared as follows:
+
+char str[16];
+
+4.
+
+q points to an unknown memory because it has not been initialized.
+
+5.
+
+char *duplicate(const char *p)
+{
+    char *q = malloc(sizeof(char) * strlen(p));
+    strcpy(q,p);
+    return q;
+}
+
+6.
+
+int *find_first(int *a, int target, int n) {
+
+    int i, val;
+    int *returnval;
+
+    for (i=0; i <= n-1; i++){
+        val = a[i];
+        if (val == target){
+            returnval = &a[i];
+            break;
+        }
+        else 
+        {
+            returnval = NULL;
+        }
+    }
+    return returnval;
+}
+
+
+

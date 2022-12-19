@@ -1,0 +1,59 @@
+Roshan Poudel
+CSCI 270
+HW#3
+
+
+1.
+    x = 10 y = 20
+    x = 3 y = 20 arr[0] = 13 arr[3] = 5
+
+    The contents of the array arr right before the print statement is {13, 3, 4, 5, 6}
+
+
+2. 
+
+   struct Point *initPoint(char *label, int x, int y) {
+
+   struct Point *p;
+
+   p = (struct Point *) malloc(sizeof(struct Point));
+
+   if (p==NULL){
+    printf("Malloc failed. Terminating the program.");
+    return NULL;
+   }
+
+   p->x = x;
+   p->y = y;
+
+   p->label = malloc(256);
+   memmove(p->label, label, 256); //deep copying label into struct's label field
+   
+   free(p); //deallocating space for struct p in the heap memory.
+   p = NULL;
+
+   return p;
+
+   }
+
+   //This funciton, when given the address of an existing struct Point, frees the memory associated with its field p->label.
+   //Also the function prototype needs to be included in point.h file. 
+   //Otherwise, the program will throw tantrum stating "implicit declaration of function is invalid in c99."
+
+   void freethespace(struct Point *p){
+   free(p->label);
+   p->label = NULL;
+   }
+    
+3. Output of the following program is the string ROCKON
+
+#include <stdio.h>
+
+int main() {
+   char s[] = "SPDLPO", *p;
+   for (p = s; *p; p++) {
+      --*p;
+   }
+   puts(s);
+   return 0;
+}
